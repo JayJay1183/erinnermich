@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>ErinnerMich</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#09070f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ErinnerMich">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icon-180.png">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="container">
+    <form action="/logout" method="post" class="logout-form"><button type="submit" class="secondary small">Abmelden</button></form>
+    <section class="card">
+      <div class="hero"><img src="/icon-192.png" alt="ErinnerMich Icon"><div><h1>ErinnerMich</h1><p class="tagline">Deine private Termin-Erinnerung</p></div></div>
+      <p class="muted">SMS-Erinnerungen 60, 30 und 15 Minuten vorher. Jeden Abend um 20:00 Uhr bekommst du deine Termine für morgen.</p>
+      <div class="install-box">
+        <strong>Handy-App nutzen:</strong><br>
+        iPhone: Safari öffnen → Teilen-Symbol → „Zum Home-Bildschirm“.<br>
+        Android: Chrome öffnen → Menü → „App installieren“ oder „Zum Startbildschirm hinzufügen“.
+      </div>
+
+      <div class="install-box">
+        <strong>Kalender automatisch verbinden:</strong><br>
+        Kopiere diesen Link und füge ihn auf dem iPhone als Kalender-Abo hinzu:<br>
+        <input class="calendar-link" value="<%= calendarUrl %>" readonly onclick="this.select()">
+        <small>iPhone: Einstellungen → Kalender → Accounts → Account hinzufügen → Andere → Kalenderabo hinzufügen.</small>
+      </div>
+
+      <form action="/appointments" method="post" class="form">
+        <label>
+          Termin
+          <input type="text" name="title" placeholder="z. B. Sitzung, Arzttermin, Geburtstag" required>
+        </label>
+
+        <div class="grid">
+          <label>
+            Datum
+            <input type="date" name="date" required>
+          </label>
+
+          <label>
+            Uhrzeit
+            <input type="time" name="time" required>
+          </label>
+        </div>
+
+        <label>
+          Ort
+          <input type="text" name="location" placeholder="optional">
+        </label>
+
+        <label>
+          Notiz
+          <textarea name="notes" rows="3" placeholder="optional"></textarea>
+        </label>
+
+        <button type="submit">Termin merken</button>
+      </form>
+
+      <form action="/test-sms" method="post" class="test-form">
+        <button type="submit" class="secondary">Test-SMS senden</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Gemerkte Termine</h2>
+
+      <% if (appointments.length === 0) { %>
+        <p class="muted">Noch keine Termine eingetragen.</p>
+      <% } %>
+
+      <div class="appointments">
+        <% appointments.forEach(function(appt) { %>
+          <article class="appointment">
+            <div>
+              <strong><%= appt.title %></strong>
+              <p>
+                <%= dayjs(appt.start_time).tz(timezone).format("DD.MM.YYYY, HH:mm") %> Uhr
+                <% if (appt.location) { %>
+                  <br>Ort: <%= appt.location %>
+                <% } %>
+                <% if (appt.notes) { %>
+                  <br>Notiz: <%= appt.notes %>
+                <% } %>
+              </p>
+            </div>
+            <form action="/appointments/<%= appt.id %>/delete" method="post">
+              <button type="submit" class="danger">Löschen</button>
+            </form>
+          </article>
+        <% }) %>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

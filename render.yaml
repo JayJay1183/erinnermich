@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: erinnermich
+    runtime: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: APP_TIMEZONE
+        value: Europe/Berlin
+      - key: DB_PATH
+        value: /var/data/appointments.db
+      - key: APP_PASSWORD
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: CALENDAR_TOKEN
+        generateValue: true
+      - key: SMS_TO
+        sync: false
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_SMS_FROM
+        sync: false
+    disk:
+      name: erinnermich-data
+      mountPath: /var/data
+      sizeGB: 1

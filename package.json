@@ -1,0 +1,24 @@
+{
+  "name": "erinnermich",
+  "version": "1.0.0",
+  "description": "Private Termin-App mit SMS-Erinnerungen",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "node-cron": "^3.0.3",
+    "sqlite3": "^5.1.7",
+    "twilio": "^5.4.0",
+    "cookie-session": "^2.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
