@@ -33,8 +33,9 @@ const PORT = process.env.PORT || 3000;
 const TZ = process.env.APP_TIMEZONE || "Europe/Berlin";
 
 app.set("view engine", "ejs");
+app.set("views", __drname);
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
+app.use(express.static(__drname));
 
 app.use(cookieSession({
   name: "erinnermich_session",
