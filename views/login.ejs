@@ -1,1 +1,37 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>ErinnerMich Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#09070f">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icon-180.png">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="container login-container">
+    <section class="card login-card">
+      <div class="hero center">
+        <img src="/icon-192.png" alt="ErinnerMich Icon">
+        <div>
+          <h1>ErinnerMich</h1>
+          <p class="tagline">Bitte anmelden</p>
+        </div>
+      </div>
 
+      <% if (error) { %>
+        <p class="error"><%= error %></p>
+      <% } %>
+
+      <form action="/login" method="post" class="form">
+        <label>
+          Passwort
+          <input type="password" name="password" required autofocus>
+        </label>
+        <button type="submit">Einloggen</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
